@@ -1,0 +1,17 @@
+{
+  "name": "licensekeyman",
+  "version": "1.0.0",
+  "description": "License Key Manager",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.8.2",
+    "express": "^4.9.3",
+    "mysql": "^2.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node app.js"
+  },
+  "author": "Evan Reichard",
+  "license": "ISC"
+}
