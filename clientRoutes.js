@@ -8,13 +8,15 @@ module.exports = function(router){
 		});
 	})
 	
-	// Must use x-www-form-urlencoded
 	.post('/checklicense', function(req, res) {
 		// ApplicationID
 		res.json(req.body)
+		
+		checkLicense.executeTestQuery(function(data){
+			res.json(data);	
+		});
 	})
 	
-	// Must use x-www-form-urlencoded
 	.post('/register', function(req, res) {
 		res.json(req.body.test)
 	});	
