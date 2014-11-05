@@ -10,11 +10,15 @@ module.exports = function(router){
 	
 	.post('/checklicense', function(req, res) {
 		// ApplicationID
-		res.json(req.body)
-		
-		checkLicense.executeTestQuery(function(data){
-			res.json(data);	
-		});
+		//res.json(req.body.licensekey)
+	
+		if(req.body.licensekey && req.body.email){	
+			clientLogic.checkLicense(req.body.licensekey, req.body.email, function(data){
+				res.json(data);	
+			});
+		}else{
+			res.json(req.body);
+		}
 	})
 	
 	.post('/register', function(req, res) {
