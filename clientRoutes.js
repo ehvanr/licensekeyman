@@ -3,9 +3,7 @@ var clientLogic = require('./clientLogic.js');
 module.exports = function(router){
 	
 	router.get('/', function(req, res) {
-		clientLogic.executeTestQuery(function(data){
-			res.json(data);	
-		});
+        res.json(req.body);
 	})
 	
 	.post('/checklicense', function(req, res) {

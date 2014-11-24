@@ -16,9 +16,61 @@ module.exports = function(router){
 	})
 
 	// Return all keys for specific application
-	.post('/keys', function(req, res) {
+	.post('/keys_by_application', function(req, res) {
 		if(req.body.appID){
-			managementLogic.getKeys(req.body.appID, function(data){
+			managementLogic.getKeysByApplication(req.body.appID, function(data){
+				res.json(data);	
+			});
+		}else{
+			res.json(req.body)
+		}
+	})
+
+    // ---------------------------------------------
+    // Active Keys
+	.post('/active_keys', function(req, res) {
+		if(req.body.appID){
+			managementLogic.getActiveKeys(req.body.appID, function(data){
+				res.json(data);	
+			});
+		}else{
+			res.json(req.body)
+		}
+	})
+    
+    // Inactive Keys
+	.post('/inactive_keys', function(req, res) {
+		if(req.body.appID){
+			managementLogic.getInActiveKeys(req.body.appID, function(data){
+				res.json(data);	
+			});
+		}else{
+			res.json(req.body)
+		}
+	})
+
+    // Active Users
+	.get('/active_users', function(req, res) {
+        managementLogic.getActiveUsers(function(data){
+            res.json(data);	
+        });
+	})
+    
+    // Inactive Users
+	.post('/inactive_users', function(req, res) {
+		if(req.body.appID){
+			managementLogic.getInActiveUsers(req.body.appID, function(data){
+				res.json(data);	
+			});
+		}else{
+			res.json(req.body)
+		}
+	})
+    
+    // Users
+	.post('/users_on_application', function(req, res) {
+		if(req.body.appID){
+			managementLogic.getUsersBasedOnApplication(req.body.appID, function(data){
 				res.json(data);	
 			});
 		}else{
