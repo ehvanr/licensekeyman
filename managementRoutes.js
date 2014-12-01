@@ -2,14 +2,7 @@ var managementLogic = require('./managementLogic.js');
 
 module.exports = function(router){
 	
-	router.get('/', function(req, res) {
-		managementLogic.executeTestQuery(function(data){
-			res.json(data);	
-		});
-	})
-	
-	// Returns all applications
-	.get('/applications', function(req, res) {
+	router.get('/applications', function(req, res) {
 		managementLogic.getApplications(function(data){
 			res.json(data);	
 		});
@@ -57,14 +50,10 @@ module.exports = function(router){
 	})
     
     // Inactive Users
-	.post('/inactive_users', function(req, res) {
-		if(req.body.appID){
-			managementLogic.getInActiveUsers(req.body.appID, function(data){
-				res.json(data);	
-			});
-		}else{
-			res.json(req.body)
-		}
+	.get('/inactive_users', function(req, res) {
+        managementLogic.getInActiveUsers(function(data){
+            res.json(data);	
+        });
 	})
     
     // Users
