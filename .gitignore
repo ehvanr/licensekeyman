@@ -2,6 +2,7 @@
 ## Mine
 #################
 node_modules/
+javalib/*.class
 
 #################
 ## Eclipse
