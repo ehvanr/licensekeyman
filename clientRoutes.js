@@ -18,7 +18,7 @@ module.exports = function(router){
 	.post('/register_application', function(req, res) {
 		
         if(req.body.licensekey && req.body.email && req.body.appID){	
-			clientLogic.checkLicense(req.body.licensekey, req.body.email, req.body.appID, function(data){
+			clientLogic.registerApplication(req.body.licensekey, req.body.email, req.body.appID, function(data){
 				res.json(data);	
 			});
 		}else{

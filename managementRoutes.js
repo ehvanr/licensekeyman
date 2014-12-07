@@ -19,15 +19,20 @@ module.exports = function(router){
 		}
 	})
 
-    // ---------------------------------------------
+
+    // Keys
+	.get('/keys', function(req, res) {
+        managementLogic.getKeys(function(data){
+            res.json(data);	
+        });
+	})
+
     // Active Keys
 	.post('/active_keys', function(req, res) {
 		if(req.body.appID){
 			managementLogic.getActiveKeys(req.body.appID, function(data){
 				res.json(data);	
 			});
-		}else{
-			res.json(req.body)
 		}
 	})
     
@@ -37,10 +42,16 @@ module.exports = function(router){
 			managementLogic.getInActiveKeys(req.body.appID, function(data){
 				res.json(data);	
 			});
-		}else{
-			res.json(req.body)
 		}
 	})
+    
+    // Users
+	.get('/users', function(req, res) {
+        managementLogic.getUsers(function(data){
+            res.json(data);	
+        });
+	})
+
 
     // Active Users
 	.get('/active_users', function(req, res) {
@@ -56,7 +67,7 @@ module.exports = function(router){
         });
 	})
     
-    // Users
+    // Users by Application
 	.post('/users_on_application', function(req, res) {
 		if(req.body.appID){
 			managementLogic.getUsersBasedOnApplication(req.body.appID, function(data){

@@ -1,5 +1,4 @@
-import java.util.*;
-import java.io.*;
+
 import java.net.*;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
@@ -33,9 +32,26 @@ public class LicenseKeyAPI{
      * @param   licenseKey  The license key to register with the server.
      * @return              The status code returned from the server.
      **/
-    public int registerApp(String userName, String userEmail, String licenseKey){
-        String URLpostFixEndpoint = "register_application";
-        return 0; 
+    public int registerApp(String appID, String userEmail, String licenseKey){
+        String URLpostFixEndpoint = "api/client/register_application";
+        
+        // Creates HTTP POST request
+        HttpPost httppost = new HttpPost(baseServerURLAddress + URLpostFixEndpoint);
+        httppost.addHeader("Content-Type", "application/json");
+        httppost.setHeader("Content-Type", "application/json; charset= utf-8");
+        httppost.setHeader("Accept", "application/json"); 
+
+        JSONObject json = new JSONObject();
+        json.put("email", userEmail);
+        json.put("licensekey", licenseKey);
+        json.put("appID", appID);
+
+        StringEntity entity = new StringEntity(json.toString(), "utf-8");
+
+        // Adds the POST params to the request
+        httppost.setEntity(entity);
+
+        return sendPOST(httppost); 
     }
    
     /**
@@ -51,8 +67,8 @@ public class LicenseKeyAPI{
         
         // Creates HTTP POST request
         HttpPost httppost = new HttpPost(baseServerURLAddress + URLpostFixEndpoint);
-        httppost.addHeader("content-type", "application/json");
-        httppost.setHeader("content-type", "application/json; charset= utf-8");
+        httppost.addHeader("Content-Type", "application/json");
+        httppost.setHeader("Content-Type", "application/json; charset= utf-8");
         httppost.setHeader("Accept", "application/json"); 
 
         JSONObject json = new JSONObject();
@@ -76,14 +92,31 @@ public class LicenseKeyAPI{
      * @return              The status code returned from the server.
      **/
     public int registerUser(String userName, String userEmail){
-        String URLpostFixEndpoint = "register_user";
-        return 0; 
+        String URLpostFixEndpoint = "api/client/register_user";
+        
+        // Creates HTTP POST request
+        HttpPost httppost = new HttpPost(baseServerURLAddress + URLpostFixEndpoint);
+        httppost.addHeader("Content-Type", "application/json");
+        httppost.setHeader("Content-Type", "application/json; charset= utf-8");
+        httppost.setHeader("Accept", "application/json"); 
+
+        JSONObject json = new JSONObject();
+        json.put("username", userName);
+        json.put("email", userEmail);
+
+        StringEntity entity = new StringEntity(json.toString(), "utf-8");
+
+        // Adds the POST params to the request
+        httppost.setEntity(entity);
+
+        return sendPOST(httppost); 
     }
     
     /**
-     * The method that sends a post command.
+     * The method that sends a post command and reads the status response.
      *
      * @param   postObj     The HttpPost object that contains the params and the URL.
+     * @return              The status code returned by the server.
      **/
     private int sendPOST(HttpPost postObj){
         HttpResponse response;
@@ -99,17 +132,10 @@ public class LicenseKeyAPI{
                 return Integer.parseInt(json.get("CODE").toString());
             }
         }catch(Exception e){
-            // E
-            System.out.println("uhh");
+            
         }
         
+        // ERROR: 5000 Communication Error        
         return 5000; 
-    }
-    
-    /**
-     * The method that sends a get command.
-     **/
-    private void sendGET(){
-        
     }
 }

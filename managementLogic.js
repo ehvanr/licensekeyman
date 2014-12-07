@@ -32,6 +32,13 @@ module.exports = {
 		
 	},
    
+	getKeys: function (cb){
+		// Execute the query
+		dbConnection.connection.query('SELECT * FROM Applicationkeys;', null, function(err, result) {
+			cb(result);
+		});
+	},
+    
     getInActiveKeys: function (appID, cb){
 		// Execute the query
 		dbConnection.connection.query('SELECT * FROM Applicationkeys WHERE InUse = 0 AND ApplicationID = ?', [appID], function(err, result) {
@@ -48,6 +55,13 @@ module.exports = {
 		
 	},
    
+	getUsers: function (cb){
+		// Execute the query
+		dbConnection.connection.query('SELECT * FROM users;', null, function(err, result) {
+			cb(result);
+		});
+	},
+    
     getActiveUsers: function (cb){
 		// Execute the query
 		dbConnection.connection.query('SELECT DISTINCT Users.UserID, users.UserName, users.UserEmail FROM Users INNER JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID;', null, function(err, result) {
