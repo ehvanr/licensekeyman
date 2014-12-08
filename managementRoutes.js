@@ -14,8 +14,6 @@ module.exports = function(router){
 			managementLogic.getKeysByApplication(req.body.appID, function(data){
 				res.json(data);	
 			});
-		}else{
-			res.json(req.body)
 		}
 	})
 
@@ -73,8 +71,6 @@ module.exports = function(router){
 			managementLogic.getUsersBasedOnApplication(req.body.appID, function(data){
 				res.json(data);	
 			});
-		}else{
-			res.json(req.body)
 		}
 	});
 }

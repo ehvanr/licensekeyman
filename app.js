@@ -2,13 +2,21 @@ var express 	= require('express');
 var bodyParser	= require('body-parser');
 var client 		= express()
 	management	= express();
-	
-// Use body-parser
-client.use(bodyParser.json());
-//client.use(bodyParser.urlencoded({extended: true}));
 
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+}
+
+// Configure Client
+client.use(bodyParser.json());
+client.use(allowCrossDomain);
+
+// Configure Management
 management.use(bodyParser.json());
-//management.use(bodyParser.urlencoded({extended: true}));
+management.use(allowCrossDomain);
 
 // Define the client and management routes
 var clientRouter = express.Router();
