@@ -14,7 +14,7 @@ function getApplications(cb){
     // ApplicationID, ApplicationName
     var keyArray = ["ApplicationID", "ApplicationName"];
 
-    getReq(myURL, cb);
+    getReq(myURL, keyArray, cb);
 }
 
 function getUsers(cb){
@@ -48,33 +48,45 @@ function getInActiveUsers(cb){
 function getKeysByApplication(appID, cb){
     var myData = '{"appID":' + appID + '}';
     var myURL = "http://localhost:8081/api/management/keys_by_application";
-    postReq(myURL, myData, cb);
+
     // Key, ApplicationID, UserID, InUse, Issued, Expires
+    var keyArray = ["Key", "ApplicationID", "UserID", "InUse", "Issued", "Expires"];
+
+    postReq(myURL, keyArray, myData, cb);
 }
 
 function getActiveKeys(appID, cb){
     var myData = '{"appID":' + appID + '}';
     var myURL = "http://localhost:8081/api/management/active_keys";
-    postReq(myURL, myData, cb);
+    
     // Key, ApplicationID, UserID, InUse, Issued, Expires
+    var keyArray = ["Key", "ApplicationID", "UserID", "InUse", "Issued", "Expires"];
+    
+    postReq(myURL, keyArray, myData, cb);
 }
 
 function getInActiveKeys(appID, cb){
     var myData = '{"appID":' + appID + '}';
     var myURL = "http://localhost:8081/api/management/inactive_keys";
-    postReq(myURL, myData, cb);
+    
     // Key, ApplicationID, UserID, InUse, Issued, Expires
+    var keyArray = ["Key", "ApplicationID", "UserID", "InUse", "Issued", "Expires"];
+    
+    postReq(myURL, keyArray, myData, cb);
 }
 
 function getUsersOnApplication(appID, cb){
     var myData = '{"appID":' + appID + '}';
     var myURL = "http://localhost:8081/api/management/users_on_application";
-    postReq(myURL, myData, cb);
+    
     // Key, ApplicationID, UserID, UserName, UserEmail, Issued, Expires
+    var keyArray = ["Key", "ApplicationID", "UserID", "UserName", "UserEmail", "Issued", "Expires"];
+    
+    postReq(myURL, keyArray, myData, cb);
 }
 
 // GENERIC POST & GET
-function postReq(URL, jsonData, cb){
+function postReq(URL, keyArray, jsonData, cb){
     $.ajax({
         type: "POST",
         contentType : 'application/json',
@@ -82,7 +94,7 @@ function postReq(URL, jsonData, cb){
         data: jsonData,
         url: URL,
         success: function(response){
-            cb(response);
+            cb(keyArray, response);
         }        
     })
 }

@@ -1,0 +1,59 @@
+html{
+	overflow-y: scroll;
+}
+
+*{
+	margin: 0px;
+	padding: 0px;
+}
+
+body{
+	margin: 0px;
+	padding: 0px;
+	height: 100%;
+}
+
+#header{
+    width: 1100px;
+    margin: 0px auto 0px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#header h1{
+    padding: 100px 0px 0px 0px;
+}
+
+#header_wrapper{
+    height: 150px;
+    background-color: #0017BF;
+}
+
+#wrapper{
+    height: 2000px;
+    width: 1100px;
+    margin: 0px auto 0px;
+    padding: 20px;
+    position: relative;
+}
+
+#navigation{
+    float: left;    
+    width: 180px;
+}
+
+#content{
+    float: right;
+    width: 900px;
+}
+
+ul{
+    list-style-type: none;
+}
+
+li{
+    margin: 15px 0px 0px 0px;
+}
+
+li:hover{
+    cursor: pointer;  
+}
