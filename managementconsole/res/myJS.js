@@ -48,14 +48,23 @@ function generateTable(keyArray, data, subMenu){
         }
         tbdyElement.appendChild(trBodyElement);
     }
-    
+
     // Append ALL THE THINGS
     myTable.appendChild(theadElement);
     myTable.appendChild(tbdyElement);
     myContent.appendChild(myTable)
     
     $(document).ready(function(){
-        $('#myData').DataTable();
+        var myDT = $('#myData').DataTable();
+
+        $('#myData tbody').on('click', 'tr', function(){
+            if($(this).hasClass('selected')){
+                $(this).removeClass('selected');
+            }else{
+                myDT.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+        });
     });
 }
 

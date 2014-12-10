@@ -79,76 +79,111 @@ module.exports = {
 	},
 
     /**
-     * application/remove
-     * application/rename
-     * application/add
+     * [removeApplication] application/remove
+     *      appID
+     * [renameApplication] application/rename
+     *      appID, newName
+     * [addApplication] application/add
+     *      appName
      * 
-     * user/delete
-     * user/change_name
-     * user/change_email
+     * [deleteUser] user/delete
+     *      userID
+     * [changeUserName] user/change_name
+     *      userID, newName
+     * [changeUserEmail] user/change_email
+     *      userID, newEmail
      * 
-     * key/delete
-     * key/add_amount
-     * key/disassociate_user
+     * [deleteKey] key/delete
+     *      key, appID
+     * [addKeys] key/add_amount
+     *      keyAmount
+     * [disassociateUser] key/disassociate_user
+     *      userID, appID, key
      **/
 
+    // DONE - UNCHECKED 
+    // Force param? (That deletes all foreign key restraints if failed?)
     removeApplication: function (appID, cb){
 		// Execute the query
-		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+		dbConnection.connection.query('DELETE FROM applications WHERE applicationID = ?;', [appID], function(err, result) {
 			cb(result);
+            /*
+            if(result === undefined || result.length < 1){
+                cb({"STATUS":"No Records","CODE":4001});
+            }else{
+                if(err){
+                    // Error why
+                    cb({"STATUS":"Error","CODE":4010});
+                }else{
+                    if(result.changedRows === 1){
+                        cb({"STATUS":"Application Registered","CODE":1001});
+                    }else{
+                        cb({"STATUS":"Nothing Changed","CODE":4009});
+                    }
+                }
+            }
+            */
 		});
 		
 	},
 
+    // DONE - UNCHECKED 
     renameApplication: function (appID, newName, cb){
 		// Execute the query
-		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+		dbConnection.connection.query('UPDATE applications SET ApplicationName = ? WHERE ApplicationID = ?;', [newName, appID], function(err, result) {
 			cb(result);
 		});
 		
 	},
 
+    // DONE - UNCHECKED 
     addApplication: function (appName, cb){
 		// Execute the query
-		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+		dbConnection.connection.query('INSERT INTO applications (ApplicationName) VALUES (?);', [appName], function(err, result) {
 			cb(result);
 		});
 		
 	},
 
+    // DONE - UNCHECKED 
+    // Force param? (That deletes all foreign key restraints if failed?)
     deleteUser: function (userID, cb){
 		// Execute the query
-		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+		dbConnection.connection.query('DELETE FROM users WHERE userID = ?;', [userID], function(err, result) {
 			cb(result);
 		});
 		
 	},
 
+    // DONE - UNCHECKED 
     changeUserName: function (userID, newName, cb){
 		// Execute the query
-		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+		dbConnection.connection.query('UPDATE users SET userName = ? WHERE UserID = ?;', [newName, userID], function(err, result) {
 			cb(result);
 		});
 		
 	},
     
+    // DONE - UNCHECKED 
     changeUserEmail: function (userID, newEmail, cb){
 		// Execute the query
-		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+		dbConnection.connection.query('UPDATE users SET userEmail = ? WHERE UserID = ?;', [newEmail, userID], function(err, result) {
 			cb(result);
 		});
 		
 	},
     
+    // DONE - UNCHECKED  
     deleteKey: function (key, appID, cb){
 		// Execute the query
-		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+		dbConnection.connection.query('DELETE FROM applicationkeys WHERE `Key` = ? AND applicationID = ?;', [key, appID], function(err, result) {
 			cb(result);
 		});
 		
 	},
     
-    addKeys: function (keyAmount, cb){
+    // Add a lot of keys.  Generate random data, md5 it and make new key for specific app. 
+    addKeys: function (appID, keyAmount, cb){
 		// Execute the query
 		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
 			cb(result);
@@ -156,7 +191,7 @@ module.exports = {
 		
 	},
     
-    disassociateUser: function (cb){
+    disassociateUser: function (userID, appID, key, cb){
 		// Execute the query
 		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
 			cb(result);

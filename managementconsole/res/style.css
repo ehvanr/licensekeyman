@@ -25,7 +25,7 @@ body{
 
 #header_wrapper{
     height: 150px;
-    background-color: #0017BF;
+    background-color: #5968D4;
 }
 
 #wrapper{
@@ -38,12 +38,26 @@ body{
 
 #navigation{
     float: left;    
-    width: 180px;
+    width: 160px;
+    height: 360px;
+    margin: 20px 0px 0px 0px;
+    padding: 10px 10px 20px 10px;
+    border: 1px solid;
+    border-radius: 15px;
 }
 
 #content{
     float: right;
     width: 900px;
+}
+
+#submenu{
+    margin: 10px 0px 0px 0px;
+    border: 1px solid;
+    border-radius: 15px;
+    width: 900px;
+    height: 200px;
+    float: right;
 }
 
 ul{
@@ -54,6 +68,6 @@ li{
     margin: 15px 0px 0px 0px;
 }
 
-li:hover{
+li:hover, tbody tr:hover{
     cursor: pointer;  
 }
