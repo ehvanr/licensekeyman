@@ -76,5 +76,91 @@ module.exports = {
 			cb(result);
 		});
 		
+	},
+
+    /**
+     * application/remove
+     * application/rename
+     * application/add
+     * 
+     * user/delete
+     * user/change_name
+     * user/change_email
+     * 
+     * key/delete
+     * key/add_amount
+     * key/disassociate_user
+     **/
+
+    removeApplication: function (appID, cb){
+		// Execute the query
+		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+			cb(result);
+		});
+		
+	},
+
+    renameApplication: function (appID, newName, cb){
+		// Execute the query
+		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+			cb(result);
+		});
+		
+	},
+
+    addApplication: function (appName, cb){
+		// Execute the query
+		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+			cb(result);
+		});
+		
+	},
+
+    deleteUser: function (userID, cb){
+		// Execute the query
+		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+			cb(result);
+		});
+		
+	},
+
+    changeUserName: function (userID, newName, cb){
+		// Execute the query
+		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+			cb(result);
+		});
+		
+	},
+    
+    changeUserEmail: function (userID, newEmail, cb){
+		// Execute the query
+		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+			cb(result);
+		});
+		
+	},
+    
+    deleteKey: function (key, appID, cb){
+		// Execute the query
+		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+			cb(result);
+		});
+		
+	},
+    
+    addKeys: function (keyAmount, cb){
+		// Execute the query
+		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+			cb(result);
+		});
+		
+	},
+    
+    disassociateUser: function (cb){
+		// Execute the query
+		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+			cb(result);
+		});
+		
 	}
 };

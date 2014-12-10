@@ -2,7 +2,7 @@ function onLoad(){
     getApplications(generateTable);
 }
 
-function generateTable(keyArray, data){
+function generateTable(keyArray, data, subMenu){
     // Delete the table here when we generate another one.
     if(document.getElementById("myData_wrapper") != null){
         document.getElementById("myData_wrapper").remove();
@@ -32,7 +32,8 @@ function generateTable(keyArray, data){
     // Set the content from the request
     for(var i = 0; i < data.length; i++){
         var trBodyElement = document.createElement('tr');
-        
+        trBodyElement.onclick = function(){subMenuOptions(this, subMenu)};
+
         for(var j = 0; j < keyArray.length; j++){                 
             var tdElement = document.createElement('td');
             var tempValue = data[i][keyArray[j]];
@@ -56,4 +57,8 @@ function generateTable(keyArray, data){
     $(document).ready(function(){
         $('#myData').DataTable();
     });
+}
+
+function subMenuOptions(clickedElement, subMenu){
+    console.log(clickedElement.innerHTML + ": " + subMenu); 
 }

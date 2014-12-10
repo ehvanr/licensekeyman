@@ -16,7 +16,7 @@ public class SampleApplication{
         // int statusCode = API.registerApp("34", "cgonzalez2@dyndns.org", "000150fe-14f6-4074-bcc0-481e410d339b");
         
         // UserName, UserEmail
-        // int statusCode = API.registerUser("Poopie Doopie", "wah@wahmbulance.com"); 
+        int statusCode = API.registerUser("BUTTHEAD", "wah@wahmbussssslance.com"); 
 
 
         System.out.println("STATUS: " + statusCode);
