@@ -11,22 +11,55 @@ module.exports = function(router){
 		});
 	})
 
-	// Return all keys for specific application
 	.post('/application/keys', function(req, res) {
 		if(req.body.appID){
 			managementLogic.getKeysByApplication(req.body.appID, function(data){
 				res.json(data);	
 			});
-		}
+		}else{
+            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+        }
 	})
 
-    // Users by Application
 	.post('/application/users', function(req, res) {
 		if(req.body.appID){
 			managementLogic.getUsersBasedOnApplication(req.body.appID, function(data){
 				res.json(data);	
 			});
-		}
+		}else{
+            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+        }
+	})
+    
+    .post('/application/remove', function(req, res) {
+		if(req.body.appID){
+			managementLogic.removeApplication(req.body.appID, function(data){
+				res.json(data);	
+			});
+		}else{
+            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+        }
+	})
+	
+	.post('/application/rename', function(req, res) {
+        console.log("why");
+        if(req.body.appID && req.body.newName){
+			managementLogic.renameApplication(req.body.appID, req.body.newName, function(data){
+				res.json(data);	
+			});
+		}else{
+            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+        }
+	})
+	
+	.post('/application/add', function(req, res) {
+		if(req.body.appName){
+			managementLogic.addApplication(req.body.appName, function(data){
+				res.json(data);	
+			});
+		}else{
+            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+        }
 	})
 
     // --------------------------------------------------------------------- \\    
@@ -38,24 +71,55 @@ module.exports = function(router){
         });
 	})
     
-    // Active Keys
 	.post('/key/list/active', function(req, res) {
 		if(req.body.appID){
 			managementLogic.getActiveKeys(req.body.appID, function(data){
 				res.json(data);	
 			});
-		}
+		}else{
+            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+        }
 	})
     
-    // Inactive Keys
 	.post('/key/list/inactive', function(req, res) {
 		if(req.body.appID){
 			managementLogic.getInActiveKeys(req.body.appID, function(data){
 				res.json(data);	
 			});
-		}
+		}else{
+            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+        }
 	})
     
+	.post('/key/remove', function(req, res) {
+		if(req.body.key && req.body.appID){
+			managementLogic.removeKey(req.body.key, req.body.appID, function(data){
+				res.json(data);	
+			});
+		}else{
+            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+        }
+	})
+	
+	.post('/key/add_amount', function(req, res) {
+		if(req.body.appID && req.body.keyAmount){
+			managementLogic.addKeys(req.body.appID, req.body.keyAmount, function(data){
+				res.json(data);	
+			});
+		}else{
+            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+        }
+	})
+	
+	.post('/key/disassociate_user', function(req, res) {
+		if(req.body.userID && req.body.appID && req.body.key){
+			managementLogic.disassociateUser(req.body.userID, req.body.appID, req.body.key, function(data){
+				res.json(data);	
+			});
+		}else{
+            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+        }
+	})
 
     // --------------------------------------------------------------------- \\    
     // ------------------------------USER----------------------------------- \\    
@@ -66,22 +130,58 @@ module.exports = function(router){
         });
 	})
     
-    // Active Users
 	.get('/user/list/active', function(req, res) {
         managementLogic.getActiveUsers(function(data){
             res.json(data);	
         });
 	})
     
-    // Inactive Users
 	.get('/user/list/inactive', function(req, res) {
         managementLogic.getInActiveUsers(function(data){
             res.json(data);	
         });
 	})
+	
+    .post('/user/remove', function(req, res) {
+		if(req.body.userID){
+			managementLogic.removeUser(req.body.userID, function(data){
+				res.json(data);	
+			});
+		}else{
+            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+        }
+	})
+	
+	.post('/user/change_name', function(req, res) {
+		if(req.body.userID && req.body.newName){
+			managementLogic.changeUserName(req.body.userID, req.body.newName, function(data){
+				res.json(data);	
+			});
+		}else{
+            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+        }
+	})
+	
+	.post('/user/change_email', function(req, res) {
+		if(req.body.userID && req.body.newEmail){
+			managementLogic.changeUserEmail(req.body.userID, req.body.newEmail, function(data){
+				res.json(data);	
+			});
+		}else{
+            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+        }
+	})
 
-    // ------------------------------------------------------------------------- //
-    // ------------------------------------------------------------------------- //
+    // NOT DONE and NOT ADDED TO LOGIC
+	.post('/user/add', function(req, res) {
+		if(req.body.userID && req.body.newEmail){
+			managementLogic.changeUserEmail(req.body.appID, req.body.newEmail, function(data){
+				res.json(data);	
+			});
+		}else{
+            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+        }
+	});
 	
     /**
      * [removeApplication] application/remove
@@ -106,84 +206,4 @@ module.exports = function(router){
      *      userID, appID, key
      **/
 	
-    .post('/application/remove', function(req, res) {
-		if(req.body.appID){
-			managementLogic.removeApplication(req.body.appID, function(data){
-				res.json(data);	
-			});
-		}
-	})
-	
-	.post('/application/rename', function(req, res) {
-		if(req.body.appID && req.body.newName){
-			managementLogic.renameApplication(req.body.appID, req.body.newName, function(data){
-				res.json(data);	
-			});
-		}
-	})
-	
-	.post('/application/add', function(req, res) {
-		if(req.body.appName){
-			managementLogic.addApplication(req.body.appName, function(data){
-				res.json(data);	
-			});
-		}
-	})
-	
-	.post('/user/delete', function(req, res) {
-		if(req.body.userID){
-			managementLogic.deleteUser(req.body.userID, function(data){
-				res.json(data);	
-			});
-		}
-	})
-	
-	.post('/user/change_name', function(req, res) {
-		if(req.body.userID && req.body.newName){
-			managementLogic.changeUserName(req.body.appID, req.body.newName, function(data){
-				res.json(data);	
-			});
-		}
-	})
-	
-	.post('/user/change_email', function(req, res) {
-		if(req.body.userID && req.body.newEmail){
-			managementLogic.changeUserEmail(req.body.appID, req.body.newEmail, function(data){
-				res.json(data);	
-			});
-		}
-	})
-
-    // NOT DONE and NOT ADDED TO LOGIC
-	.post('/user/add', function(req, res) {
-		if(req.body.userID && req.body.newEmail){
-			managementLogic.changeUserEmail(req.body.appID, req.body.newEmail, function(data){
-				res.json(data);	
-			});
-		}
-	})
-	
-	.post('/key/delete', function(req, res) {
-		if(req.body.key && req.body.appID){
-			managementLogic.deleteKey(req.body.key, req.body.appID, function(data){
-				res.json(data);	
-			});
-		}
-	})
-	
-	.post('/key/add_amount', function(req, res) {
-		if(req.body.appID && req.body.keyAmount){
-			managementLogic.addKeys(req.body.appID, req.body.keyAmount, function(data){
-				res.json(data);	
-			});
-		}
-	})
-	
-	.post('/key/disassociate_user', function(req, res) {
-		if(req.body.userID && req.body.appID && req.body.key){
-			managementLogic.disassociateUser(req.body.userID, req.body.appID, req.body.key, function(data){
-				res.json(data);	
-			});
-		}
-	});
 }

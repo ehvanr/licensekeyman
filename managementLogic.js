@@ -102,36 +102,23 @@ module.exports = {
      **/
 
     // DONE - UNCHECKED 
-    // Force param? (That deletes all foreign key restraints if failed?)
+    // * ERROR CHECKING
     removeApplication: function (appID, cb){
 		// Execute the query
-		dbConnection.connection.query('DELETE FROM applications WHERE applicationID = ?;', [appID], function(err, result) {
-			cb(result);
-            /*
-            if(result === undefined || result.length < 1){
-                cb({"STATUS":"No Records","CODE":4001});
-            }else{
-                if(err){
-                    // Error why
-                    cb({"STATUS":"Error","CODE":4010});
-                }else{
-                    if(result.changedRows === 1){
-                        cb({"STATUS":"Application Registered","CODE":1001});
-                    }else{
-                        cb({"STATUS":"Nothing Changed","CODE":4009});
-                    }
-                }
-            }
-            */
-		});
 		
+        dbConnection.connection.query('DELETE FROM applicationkeys WHERE applicationID = ?;', [appID], function(err, result) {
+            dbConnection.connection.query('DELETE FROM applications WHERE applicationID = ?;', [appID], function(err, result) {
+                cb(result);
+            });
+        });
+
 	},
 
     // DONE - UNCHECKED 
     renameApplication: function (appID, newName, cb){
 		// Execute the query
 		dbConnection.connection.query('UPDATE applications SET ApplicationName = ? WHERE ApplicationID = ?;', [newName, appID], function(err, result) {
-			cb(result);
+            cb(result);
 		});
 		
 	},
@@ -146,12 +133,15 @@ module.exports = {
 	},
 
     // DONE - UNCHECKED 
-    // Force param? (That deletes all foreign key restraints if failed?)
-    deleteUser: function (userID, cb){
+    // * ERROR CHECKING
+    removeUser: function (userID, cb){
 		// Execute the query
-		dbConnection.connection.query('DELETE FROM users WHERE userID = ?;', [userID], function(err, result) {
-			cb(result);
-		});
+		dbConnection.connection.query('DELETE FROM applicationkeys WHERE userID = ?;', [userID], function(err, result) {
+            dbConnection.connection.query('DELETE FROM users WHERE userID = ?;', [userID], function(err, result) {
+                cb(result);
+            });
+        });
+
 		
 	},
 
@@ -174,7 +164,7 @@ module.exports = {
 	},
     
     // DONE - UNCHECKED  
-    deleteKey: function (key, appID, cb){
+    removeKey: function (key, appID, cb){
 		// Execute the query
 		dbConnection.connection.query('DELETE FROM applicationkeys WHERE `Key` = ? AND applicationID = ?;', [key, appID], function(err, result) {
 			cb(result);

@@ -22,19 +22,19 @@
             <div id='navigation'>
                 <ul>
                     <li onclick="getApplications(generateTable);">Applications</li>
+                    <li onclick="getKeysByApplication(prompt('Please Enter ApplicationID:'), generateTable);">Keys By Application</li>
+                    <li onclick="getUsersOnApplication(prompt('Please Enter ApplicationID:'), generateTable);">Users on Application</li>
+
                     <li onclick="getUsers(generateTable);">Users</li>
-                    <li onclick="getKeys(generateTable);">Keys</li>
                     <li onclick="getActiveUsers(generateTable);">Active Users</li>
                     <li onclick="getInActiveUsers(generateTable);">Inactive Users</li>
 
-                    <li onclick="getKeysByApplication(prompt('Please Enter ApplicationID:'), generateTable);">Keys By Application</li>
+                    <li onclick="getKeys(generateTable);">Keys</li>
                     <li onclick="getActiveKeys(prompt('Please Enter ApplicationID:'), generateTable);">Active Keys</li>
                     <li onclick="getInActiveKeys(prompt('Please Enter ApplicationID:'), generateTable);">Inactive Keys</li>
-                    <li onclick="getUsersOnApplication(prompt('Please Enter ApplicationID:'), generateTable);">Users on Application</li>
                 </ul>
             </div>
             <div id='content'>
-        
             </div>
             <div id='submenu'>
             </div>
