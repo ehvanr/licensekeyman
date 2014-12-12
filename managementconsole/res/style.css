@@ -39,7 +39,7 @@ body{
 #navigation{
     float: left;    
     width: 160px;
-    height: 360px;
+    min-height: 360px;
     margin: 20px 0px 0px 0px;
     padding: 10px 10px 20px 10px;
     border: 1px solid;
@@ -57,8 +57,12 @@ body{
     border: 1px solid;
     border-radius: 15px;
     width: 880px;
-    height: 200px;
+    min-height: 200px;
     float: right;
+}
+
+#options{
+    margin: 10px 0px 0px 0px;
 }
 
 ul{
@@ -67,8 +71,22 @@ ul{
 
 li{
     margin: 15px 0px 0px 0px;
+    padding: 5px 5px 5px 10px;
+    color: white;
+    background-color: black;
+    border: 1px solid;
+    border-radius: 5px;
+}
+
+#options li{
+    width: 200px;
 }
 
 li:hover, tbody tr:hover{
     cursor: pointer;  
+}
+
+li:hover{
+    color: black;
+    background-color: white;
 }
