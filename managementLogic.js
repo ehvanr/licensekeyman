@@ -175,17 +175,41 @@ module.exports = {
     // Add a lot of keys.  Generate random data, md5 it and make new key for specific app. 
     addKeys: function (appID, keyAmount, cb){
 		// Execute the query
-		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
-			cb(result);
-		});
-		
+
+        for(var i = 0; i < keyAmount; i++){
+            var genKey = generateRandomKey();
+                dbConnection.connection.query('insert into applicationkeys (`Key`, ApplicationID) values (?, ?);', [genKey, appID], function(err, result){
+            });
+        }
+
+        cb({"STATUS":"Successfully added " + keyAmount + " keys.","CODE":"1003"});
 	},
     
-    disassociateUser: function (userID, appID, key, cb){
+    disassociateUser: function (appID, key, cb){
 		// Execute the query
-		dbConnection.connection.query('SELECT Users.UserID, users.UserName, users.UserEmail FROM Users LEFT JOIN Applicationkeys ON Users.UserID = applicationkeys.UserID WHERE Applicationkeys.UserID IS NULL;', null, function(err, result) {
+		dbConnection.connection.query('UPDATE applicationkeys SET UserID = NULL, InUse = 0, Issued = NULL, Expires = NULL WHERE `Key` = ? AND ApplicationID = ?;', [key, appID], function(err, result) {
 			cb(result);
 		});
 		
 	}
 };
+
+function generateRandomKey(){
+    var randString = randomHexValueOfLength(8) + "-" + randomHexValueOfLength(4) + "-" + randomHexValueOfLength(4) + "-" + randomHexValueOfLength(4) + "-" + randomHexValueOfLength(12);
+    return randString;
+}
+
+function randomHexValueOfLength(length){
+    var valueArray = ['a', 'b', 'c', 'd', 'e', 'f', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+    var tempString = '';
+
+    for(i = 0; i < length; i++){
+        tempString += valueArray[randomNumRange(0, 15)];
+    }
+
+    return tempString;
+}
+
+function randomNumRange(low, high){
+    return Math.floor(Math.random() * (high - low + 1) + low);
+}

@@ -86,6 +86,8 @@ function getUsersOnApplication(appID, cb){
 }
 
 // ADDITIONAL SUBMENU OPTION POSTS 
+
+// ARE YOU SURE!?
 function removeApplication(appID){
     var myData = '{"appID":' + appID + '}';
     var myURL = "http://localhost:8081/api/management/application/remove";
@@ -107,6 +109,7 @@ function addApplication(appName){
     postReq(myURL, null, myData, menuOptionResponse, null);
 }
 
+// ARE YOU SURE!?
 function removeUser(userID){
     var myData = '{"userID":"' + userID + '"}';
     var myURL = "http://localhost:8081/api/management/user/remove";
@@ -131,6 +134,7 @@ function changeUserEmail(userID, newEmail){
 function addUser(){
 }
 
+// ARE YOU SURE!?
 function removeKey(appID, appKey){
     var myData = '{"appID":' + appID + ',"key":"' + appKey + '"}';
     var myURL = "http://localhost:8081/api/management/key/remove";
@@ -139,12 +143,22 @@ function removeKey(appID, appKey){
 }
 
 function addKeys(appID, keyAmount){
+    var myData = '{"appID":"' + appID + '","keyAmount":"' + keyAmount + '"}';
+    var myURL = "http://localhost:8081/api/management/key/add_amount";
+
+    postReq(myURL, null, myData, menuOptionResponse, null);
 }
 
-function disassociateUser(userID, appID){
+function disassociateUser(appID, appKey){
+    var myData = '{"appID":"' + appID + '","key":"' + appKey + '"}';
+    var myURL = "http://localhost:8081/api/management/key/disassociate_user";
+
+    postReq(myURL, null, myData, menuOptionResponse, null);
 }
 
-function disassociateUserAndRemoveKey(userID, appID, appKey){
+function disassociateUserAndRemoveKey(appID, appKey){
+    disassociateUser(appID, appKey);
+    removeKey(appID, appKey);
 }
 
 // GENERIC POST & GET
@@ -156,7 +170,7 @@ function postReq(URL, keyArray, jsonData, cb, subMenu){
         data: jsonData,
         url: URL,
         success: function(response){
-            cb(keyArray, response, subMenu);
+            setTimeout(cb(keyArray, response, subMenu), 50);
         }        
     })
 }
@@ -166,7 +180,7 @@ function getReq(URL, keyArray, cb, subMenu){
         type: "GET",
         url: URL,
         success: function(response){
-            cb(keyArray, response, subMenu);
+            setTimeout(cb(keyArray, response, subMenu), 50);
         }        
     })
 }

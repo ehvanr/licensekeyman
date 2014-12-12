@@ -17,7 +17,7 @@ module.exports = function(router){
 				res.json(data);	
 			});
 		}else{
-            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+            res.json({"STATUS":"Invalid POST parameters.","CODE":3000});
         }
 	})
 
@@ -27,7 +27,7 @@ module.exports = function(router){
 				res.json(data);	
 			});
 		}else{
-            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+            res.json({"STATUS":"Invalid POST parameters.","CODE":3000});
         }
 	})
     
@@ -37,7 +37,7 @@ module.exports = function(router){
 				res.json(data);	
 			});
 		}else{
-            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+            res.json({"STATUS":"Invalid POST parameters.","CODE":3000});
         }
 	})
 	
@@ -48,7 +48,7 @@ module.exports = function(router){
 				res.json(data);	
 			});
 		}else{
-            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+            res.json({"STATUS":"Invalid POST parameters.","CODE":3000});
         }
 	})
 	
@@ -58,7 +58,7 @@ module.exports = function(router){
 				res.json(data);	
 			});
 		}else{
-            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+            res.json({"STATUS":"Invalid POST parameters.","CODE":3000});
         }
 	})
 
@@ -77,7 +77,7 @@ module.exports = function(router){
 				res.json(data);	
 			});
 		}else{
-            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+            res.json({"STATUS":"Invalid POST parameters.","CODE":3000});
         }
 	})
     
@@ -87,7 +87,7 @@ module.exports = function(router){
 				res.json(data);	
 			});
 		}else{
-            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+            res.json({"STATUS":"Invalid POST parameters.","CODE":3000});
         }
 	})
     
@@ -97,7 +97,7 @@ module.exports = function(router){
 				res.json(data);	
 			});
 		}else{
-            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+            res.json({"STATUS":"Invalid POST parameters.","CODE":3000});
         }
 	})
 	
@@ -107,17 +107,19 @@ module.exports = function(router){
 				res.json(data);	
 			});
 		}else{
-            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+            res.json({"STATUS":"Invalid POST parameters.","CODE":3000});
         }
 	})
 	
 	.post('/key/disassociate_user', function(req, res) {
-		if(req.body.userID && req.body.appID && req.body.key){
-			managementLogic.disassociateUser(req.body.userID, req.body.appID, req.body.key, function(data){
+		if(req.body.appID && req.body.key){
+            console.log(req.body.key);
+            console.log(req.body.appID);
+			managementLogic.disassociateUser(req.body.appID, req.body.key, function(data){
 				res.json(data);	
 			});
 		}else{
-            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+            res.json({"STATUS":"Invalid POST parameters.","CODE":3000});
         }
 	})
 
@@ -148,7 +150,7 @@ module.exports = function(router){
 				res.json(data);	
 			});
 		}else{
-            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+            res.json({"STATUS":"Invalid POST parameters.","CODE":3000});
         }
 	})
 	
@@ -158,7 +160,7 @@ module.exports = function(router){
 				res.json(data);	
 			});
 		}else{
-            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+            res.json({"STATUS":"Invalid POST parameters.","CODE":3000});
         }
 	})
 	
@@ -168,7 +170,7 @@ module.exports = function(router){
 				res.json(data);	
 			});
 		}else{
-            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+            res.json({"STATUS":"Invalid POST parameters.","CODE":3000});
         }
 	})
 
@@ -179,7 +181,7 @@ module.exports = function(router){
 				res.json(data);	
 			});
 		}else{
-            cb({"STATUS":"Invalid POST parameters.","CODE":3000});
+            res.json({"STATUS":"Invalid POST parameters.","CODE":3000});
         }
 	});
 	

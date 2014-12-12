@@ -9,6 +9,7 @@ function generateTable(keyArray, data, subMenuCB){
     }
 
     var myContent = document.getElementById("content");
+
     var myTable = document.createElement('table');
     myTable.id = "myData";
     myTable.style.borderCollapse = "collapse";
@@ -53,6 +54,7 @@ function generateTable(keyArray, data, subMenuCB){
     // Append ALL THE THINGS
     myTable.appendChild(theadElement);
     myTable.appendChild(tbdyElement);
+    myContent.innerHTML = '';
     myContent.appendChild(myTable)
     
     $(document).ready(function(){
