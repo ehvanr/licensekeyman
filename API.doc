@@ -1,0 +1,27 @@
+CLIENT STATUS CODES:
+
+    SUCCESS:
+        1000 - License Validated
+        1001 - Application Registered
+
+    FAILURE:
+        4001 - No Records
+        4002 - License Not Active
+        4003 - Invalid Credentials
+        4004 - License Key Not Registered
+        4005 - User Added Failed
+        4006 - No Record of User
+        4007 - More Than One User Found
+        4008 - Key Is Already In Use
+        4009 - Nothing Changed
+        4010 - Generic Error
+
+MANAGEMENT STATUS CODES:
+    
+    SUCCESS:
+        2000 - Command Executed Successfully 
+
+    FAILURE:
+        3000 - Invalid POST parameters
+        3001 - Cannot remove, foreign key constraint
+        3010 - Generic Error
