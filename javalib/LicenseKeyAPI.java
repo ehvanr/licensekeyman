@@ -1,3 +1,7 @@
+/**
+ * Written by Evan Reichard
+ * December 2014
+ **/
 
 import java.net.*;
 import org.json.simple.*;
@@ -27,12 +31,12 @@ public class LicenseKeyAPI{
     /**
      * Registers the application with the server
      *
-     * @param   userName    The users name to register the app with the server.
-     * @param   userEmail   The users email to register the app with the server.
      * @param   licenseKey  The license key to register with the server.
+     * @param   appID       The application ID to register with the server.
+     * @param   userEmail   The users email to register the app with the server.
      * @return              The status code returned from the server.
      **/
-    public int registerApp(String appID, String userEmail, String licenseKey){
+    public int registerApp(String licenseKey, String appID, String userEmail){
         String URLpostFixEndpoint = "api/client/register_application";
         
         // Creates HTTP POST request
@@ -57,12 +61,12 @@ public class LicenseKeyAPI{
     /**
      * Checks the license status with the server.
      *
-     * @param   userName    The users name to verify with the server.
      * @param   licenseKey  The license key to verify with the server.
      * @param   appID       The appID to verify with the server.
+     * @param   userName    The users name to verify with the server.
      * @return              The status code returned from the server.
      **/ 
-    public int checkApp(String userEmail, String licenseKey, String appID){
+    public int checkApp(String licenseKey, String appID, String userEmail){
         String URLpostFixEndpoint = "api/client/check_license";
         
         // Creates HTTP POST request

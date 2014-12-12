@@ -1,3 +1,7 @@
+// Vars to keep track of the last called table.  This is used in a refresh.
+var currentTableFunction;
+var currentAppID;
+
 function onLoad(){
     getApplications(generateTable);
 }
@@ -71,11 +75,7 @@ function generateTable(keyArray, data, subMenuCB){
     });
 }
 
-function applicationsSubMenu(sourceRow){
-    // ApplicationID, ApplicationName
-    var ApplicationID = sourceRow.value["ApplicationID"];
-    var ApplicationName = sourceRow.value["ApplicationName"];
-
+function populateSelectedRow(sourceRow){
     // SUBMENU TABLE CREATION
     var subMenu = document.getElementById("submenu");
     subMenu.innerHTML = "";
@@ -98,6 +98,15 @@ function applicationsSubMenu(sourceRow){
     $('#tempTable').DataTable({
         "sDom": "rt"        
     });
+}
+
+function applicationsSubMenu(sourceRow){
+    // ApplicationID, ApplicationName
+    var ApplicationID = sourceRow.value["ApplicationID"];
+    var ApplicationName = sourceRow.value["ApplicationName"];
+    
+    populateSelectedRow(sourceRow);
+    var subMenu = document.getElementById("submenu");
 
     // SUBMENU OPTIONS CREATION
     var optionsDiv = document.createElement("div");
@@ -105,9 +114,10 @@ function applicationsSubMenu(sourceRow){
 
     var optionsHTML = "<h5>Options:</h5>";
     optionsHTML += "<ul>";
-    optionsHTML += "<li>Remove Application</li>";
-    optionsHTML += "<li>Rename Application</li>";
-    optionsHTML += "<li>Add Application</li>";
+    optionsHTML += '<li onclick="removeApplication(' + ApplicationID + ');";>Delete Application</li>';
+    optionsHTML += '<li onclick="renameApplication(' + ApplicationID + ', prompt(\'New Name:\'));";>Rename Application</li>';
+    optionsHTML += '<li onclick="addKeys(' + ApplicationID + ', prompt(\'Number of Keys to add:\'));";>Add Keys to Application</li>';
+    optionsHTML += '<li onclick="addApplication(prompt(\'Name:\'));";>Add Application</li>';
     optionsHTML += "</ul>";
 
     optionsDiv.innerHTML = optionsHTML;
@@ -122,25 +132,23 @@ function usersSubMenu(sourceRow){
     var UserEmail = sourceRow.value["UserEmail"];
 
     // SUBMENU TABLE CREATION
+    populateSelectedRow(sourceRow);
     var subMenu = document.getElementById("submenu");
-    subMenu.innerHTML = "";
 
     // SUBMENU OPTIONS CREATION
     var optionsDiv = document.createElement("div");
     optionsDiv.id = "options";
 
     var optionsHTML = "<h5>Options:</h5>";
-    optionsHTML += "<ul>";
-    optionsHTML += '<li onclick="alert(' + UserID + ');";>Delete User</li>';
-    optionsHTML += "<li>Change Users Name</li>";
-    optionsHTML += "<li>Change Users Email</li>";
-    optionsHTML += "<li>Add User</li>";
-    optionsHTML += "</ul>";
+    optionsHTML += '<ul>';
+    optionsHTML += '<li onclick="removeUser(' + UserID + ');";>Delete User</li>';
+    optionsHTML += '<li onclick="changeUserName(' + UserID + ', prompt(\'New Name:\'));";>Change Users Name</li>';
+    optionsHTML += '<li onclick="changeUserEmail(' + UserID + ', prompt(\'New Email:\'));";>Change Users Email</li>';
+    optionsHTML += '<li onclick="addUser("prompt(\'User Name:\'), prompt(\'User Email:\'));";>Add User</li>';
+    optionsHTML += '</ul>';
 
     optionsDiv.innerHTML = optionsHTML;
     subMenu.appendChild(optionsDiv);
-
-    console.log(sourceRow.innerHTML + ": Users Submenu");
 }
 
 function keysSubMenu(sourceRow){
@@ -153,8 +161,8 @@ function keysSubMenu(sourceRow){
     var Expires = sourceRow.value["Expires"];
 
     // SUBMENU TABLE CREATION
+    populateSelectedRow(sourceRow);
     var subMenu = document.getElementById("submenu");
-    subMenu.innerHTML = "";
 
     // SUBMENU OPTIONS CREATION
     var optionsDiv = document.createElement("div");
@@ -162,14 +170,12 @@ function keysSubMenu(sourceRow){
 
     var optionsHTML = "<h5>Options:</h5>";
     optionsHTML += "<ul>";
-    optionsHTML += "<li>Delete Key</li>";
-    optionsHTML += "<li>Add Keys</li>";
+    optionsHTML += '<li onclick="removeKey(' + ApplicationID + ',\'' + sourceKey + '\');";>Delete Key</li>';
+    optionsHTML += '<li onclick="addKeys(' + ApplicationID + ', prompt(\'Number of Keys to add:\'));";>Add Keys</li>';
     optionsHTML += "</ul>";
 
     optionsDiv.innerHTML = optionsHTML;
     subMenu.appendChild(optionsDiv);
-
-    console.log(sourceRow.innerHTML + ": Keys Submenu");
 }
 
 function usersOnApplicationSubMenu(sourceRow){
@@ -183,6 +189,7 @@ function usersOnApplicationSubMenu(sourceRow){
     var Expires = sourceRow.value["Expires"];
 
     // SUBMENU TABLE CREATION
+    populateSelectedRow(sourceRow);
     var subMenu = document.getElementById("submenu");
 
     subMenu.innerHTML = "";
@@ -192,14 +199,12 @@ function usersOnApplicationSubMenu(sourceRow){
 
     var optionsHTML = "<h5>Options:</h5>";
     optionsHTML += "<ul>";
-    optionsHTML += "<li>Disassociate User</li>";
-    optionsHTML += "<li>Disassociate User and Remove Key</li>";
+    optionsHTML += '<li onclick="disassociateUser(' + ApplicationID + ',\'' + sourceKey + '\');";>Disassociate User</li>';
+    optionsHTML += '<li onclick="disassociateUserAndRemoveKey(' + ApplicationID + ',\'' + sourceKey + '\');";>Disassociate User and Remove Key</li>';
     optionsHTML += "</ul>";
 
     optionsDiv.innerHTML = optionsHTML;
     subMenu.appendChild(optionsDiv);
-
-    console.log(sourceRow.innerHTML + ": Users On Application Submenu");
 }
 
 function menuOptionResponse(ignore, response, ignore2){
@@ -208,7 +213,7 @@ function menuOptionResponse(ignore, response, ignore2){
 
     if(responseCode != 2000){
         console.log(response);
-        alert(responseMessage);
+        alert(response.STATUS);
     }else{
         console.log(response);
     }

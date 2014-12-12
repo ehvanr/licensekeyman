@@ -1,6 +1,14 @@
+/**
+ * Written by Evan Reichard
+ * December 2014
+ **/
+
+import java.util.Scanner;
+
 public class SampleApplication{
     
     LicenseKeyAPI API;
+    Scanner in = new Scanner(System.in);
 
     public static void main(String args[]){
         new SampleApplication();
@@ -8,17 +16,91 @@ public class SampleApplication{
 
     public SampleApplication(){
         API = new LicenseKeyAPI("localhost");
-        
-        // UserEmail, Key, AppID
-        // int statusCode = API.checkApp("cgonzalez2@dyndns.org", "a58b852d-c3db-4ea1-a008-3d299aa144fd", "24");
-        
-        // AppID, Email, LicenseKey 
-        // int statusCode = API.registerApp("34", "cgonzalez2@dyndns.org", "000150fe-14f6-4074-bcc0-481e410d339b");
-        
-        // UserName, UserEmail
-        int statusCode = API.registerUser("BUTTHEAD", "wah@wahmbussssslance.com"); 
+        mainMenu();
+    }
 
+    public void mainMenu(){
 
-        System.out.println("STATUS: " + statusCode);
+        while(true){
+            System.out.println("---------------------------------------------------------");
+            System.out.println("-------------- SAMPLE LICENSED APPLICATION --------------"); 
+            System.out.println("---------------------------------------------------------");
+            System.out.println("\t1. Register Application");
+            System.out.println("\t2. Check Registration");
+            System.out.println("\t3. Register User");
+            System.out.print("\n\tPlease Select an Option: ");
+            int val = in.nextInt();
+
+            in.nextLine();
+
+            switch(val){
+                case 1: registerApp();
+                        break;
+                case 2: checkRegistration();
+                        break;
+                case 3: registerUser();
+                        break;
+            }
+        } 
+    }
+
+    public void registerApp(){
+        System.out.println("---------------------------------------------------------");
+        System.out.println("------------------- REGISTER APPLICATION ----------------"); 
+        System.out.println("---------------------------------------------------------");
+
+        System.out.print("\n\tLicense Key: ");
+        String licenseKey = in.nextLine();
+
+        System.out.print("\tApplication ID: ");
+        String applicationID = in.nextLine();
+
+        System.out.print("\tUser Email: ");
+        String userEmail = in.nextLine();
+
+        int statusCode = API.registerApp(licenseKey, applicationID, userEmail);
+
+        System.out.println("\n\tSTATUS CODE: " + statusCode);
+
+        mainMenu(); 
+    }
+
+    public void checkRegistration(){
+        System.out.println("---------------------------------------------------------");
+        System.out.println("------------------ CHECK REGISTRATION -------------------"); 
+        System.out.println("---------------------------------------------------------");
+        
+        System.out.print("\n\tLicense Key: ");
+        String licenseKey = in.nextLine();
+
+        System.out.print("\tApplication ID: ");
+        String applicationID = in.nextLine();
+
+        System.out.print("\tUser Email: ");
+        String userEmail = in.nextLine();
+
+        int statusCode = API.checkApp(licenseKey, applicationID, userEmail);
+
+        System.out.println("\n\tSTATUS CODE: " + statusCode);
+
+        mainMenu(); 
+    }
+
+    public void registerUser(){
+        System.out.println("---------------------------------------------------------");
+        System.out.println("-------------------- REGISTER USER ----------------------"); 
+        System.out.println("---------------------------------------------------------");
+        
+        System.out.print("\n\tUser Name: ");
+        String userName = in.nextLine();
+
+        System.out.print("\tUser Email: ");
+        String userEmail = in.nextLine();
+
+        int statusCode = API.registerUser(userName, userEmail); 
+
+        System.out.println("\n\tSTATUS CODE: " + statusCode);
+
+        mainMenu(); 
     }
 }

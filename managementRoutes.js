@@ -42,7 +42,6 @@ module.exports = function(router){
 	})
 	
 	.post('/application/rename', function(req, res) {
-        console.log("why");
         if(req.body.appID && req.body.newName){
 			managementLogic.renameApplication(req.body.appID, req.body.newName, function(data){
 				res.json(data);	
@@ -113,8 +112,6 @@ module.exports = function(router){
 	
 	.post('/key/disassociate_user', function(req, res) {
 		if(req.body.appID && req.body.key){
-            console.log(req.body.key);
-            console.log(req.body.appID);
 			managementLogic.disassociateUser(req.body.appID, req.body.key, function(data){
 				res.json(data);	
 			});
@@ -174,10 +171,9 @@ module.exports = function(router){
         }
 	})
 
-    // NOT DONE and NOT ADDED TO LOGIC
 	.post('/user/add', function(req, res) {
-		if(req.body.userID && req.body.newEmail){
-			managementLogic.changeUserEmail(req.body.appID, req.body.newEmail, function(data){
+		if(req.body.userName && req.body.userEmail){
+			managementLogic.addUser(req.body.userName, req.body.userEmail, function(data){
 				res.json(data);	
 			});
 		}else{
